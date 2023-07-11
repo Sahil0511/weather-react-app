@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import "./index.css";
 
 const Weather = () => {
+  const [search, setSearch] = useState("mumbai");
+
+  const getData = async () => {
+    try {
+      let url = `https://api.openweathermap.org/data/2.5/weather?q=${search}&appid=2d779df20602d276a2f7bfcf68a58b77`;
+      let res = await fetch(url);
+      let data = await res.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <div className="wrap">
@@ -12,8 +25,10 @@ const Weather = () => {
             autoFocus
             id="search"
             className="searchTerm"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
-          <button className="searchButton" type="button">
+          <button className="searchButton" type="button" onClick={getData}>
             Search
           </button>
         </div>
